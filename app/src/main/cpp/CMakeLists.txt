@@ -14,61 +14,61 @@ set(ffmpeg_head_dir ${CMAKE_SOURCE_DIR}/ffmpeg)
 include_directories(${ffmpeg_head_dir}/include)
 
 # 3. 添加ffmpeg相关的so库
-add_library( avutil
-        SHARED
-        IMPORTED )
-set_target_properties( avutil
-        PROPERTIES IMPORTED_LOCATION
-        ${ffmpeg_lib_dir}/libavutil.so )
-
-add_library( swresample
-        SHARED
-        IMPORTED )
-set_target_properties( swresample
-        PROPERTIES IMPORTED_LOCATION
-        ${ffmpeg_lib_dir}/libswresample.so )
-
-add_library( avcodec
-        SHARED
-        IMPORTED )
-set_target_properties( avcodec
-        PROPERTIES IMPORTED_LOCATION
-        ${ffmpeg_lib_dir}/libavcodec.so )
-
-add_library( avfilter
+add_library(avutil
         SHARED
         IMPORTED)
-set_target_properties( avfilter
+set_target_properties(avutil
         PROPERTIES IMPORTED_LOCATION
-        ${ffmpeg_lib_dir}/libavfilter.so )
+        ${ffmpeg_lib_dir}/libavutil.so)
 
-add_library( swscale
+add_library(swresample
         SHARED
         IMPORTED)
-set_target_properties( swscale
+set_target_properties(swresample
         PROPERTIES IMPORTED_LOCATION
-        ${ffmpeg_lib_dir}/libswscale.so )
+        ${ffmpeg_lib_dir}/libswresample.so)
 
-add_library( avformat
+add_library(avcodec
         SHARED
         IMPORTED)
-set_target_properties( avformat
+set_target_properties(avcodec
         PROPERTIES IMPORTED_LOCATION
-        ${ffmpeg_lib_dir}/libavformat.so )
+        ${ffmpeg_lib_dir}/libavcodec.so)
 
-add_library( avdevice
+add_library(avfilter
         SHARED
         IMPORTED)
-set_target_properties( avdevice
+set_target_properties(avfilter
         PROPERTIES IMPORTED_LOCATION
-        ${ffmpeg_lib_dir}/libavdevice.so )
+        ${ffmpeg_lib_dir}/libavfilter.so)
 
-add_library( h264
+add_library(swscale
         SHARED
         IMPORTED)
-set_target_properties( h264
+set_target_properties(swscale
         PROPERTIES IMPORTED_LOCATION
-        ${ffmpeg_lib_dir}/libh264.so )
+        ${ffmpeg_lib_dir}/libswscale.so)
+
+add_library(avformat
+        SHARED
+        IMPORTED)
+set_target_properties(avformat
+        PROPERTIES IMPORTED_LOCATION
+        ${ffmpeg_lib_dir}/libavformat.so)
+
+add_library(avdevice
+        SHARED
+        IMPORTED)
+set_target_properties(avdevice
+        PROPERTIES IMPORTED_LOCATION
+        ${ffmpeg_lib_dir}/libavdevice.so)
+
+add_library(h264
+        SHARED
+        IMPORTED)
+set_target_properties(h264
+        PROPERTIES IMPORTED_LOCATION
+        ${ffmpeg_lib_dir}/libh264.so)
 
 include_directories(${ffmpeg_head_dir}/include)
 
@@ -78,7 +78,7 @@ find_library( # Sets the name of the path variable.
 
         # Specifies the name of the NDK library that
         # you want CMake to locate.
-        log )
+        log)
 
 # 配置目标so库编译信息
 add_library( # Sets the name of the library.
@@ -146,7 +146,7 @@ add_library( # Sets the name of the library.
 
         #合成器
         ${CMAKE_SOURCE_DIR}/media/synthesizer/synthesizer.cpp
-)
+        )
 
 # 指定编译目标库时，cmake要链接的库
 target_link_libraries(
@@ -170,4 +170,4 @@ target_link_libraries(
         -lGLESv2
         # Links the target library to the log library
         # included in the NDK.
-        ${log-lib} )
+        ${log-lib})
