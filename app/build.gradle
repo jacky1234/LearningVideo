@@ -34,6 +34,18 @@ android {
             path file('src/main/cpp/CMakeLists.txt')
         }
     }
+
+    // add to avoid error: https://github.com/ChenLittlePing/LearningVideo/issues/24
+    packagingOptions {
+        pickFirst 'lib/*/libavcodec.so'
+        pickFirst 'lib/*/libavdevice.so'
+        pickFirst 'lib/*/libavfilter.so'
+        pickFirst 'lib/*/libavformat.so'
+        pickFirst 'lib/*/libavutil.so'
+        pickFirst 'lib/*/libh264.so'
+        pickFirst 'lib/*/libswresample.so'
+        pickFirst 'lib/*/libswscale.so'
+    }
 }
 
 dependencies {
