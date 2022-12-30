@@ -1,0 +1,9 @@
+Q: GlSurfaceView 与 TextureView的对比
+
+GLSurfaceView 和 TextureView 是Android中的两种视图组件，它们都可用于在屏幕上显示图形内容。但是，它们的用途和实现方式略有不同。
+
+GLSurfaceView 是一种特殊的视图，它使用OpenGL渲染图形内容。它可以用于绘制3D图形或复杂的2D图形，并支持硬件加速。GLSurfaceView 通常用于游戏开发或其他对性能要求较高的应用。
+
+TextureView 使用系统的硬件纹理来渲染图形内容。它通常用于播放视频、显示相机预览或做一些简单的图形渲染。TextureView 不支持3D图形绘制，但它可以通过硬件加速来提高性能。
+
+总的来说，GLSurfaceView 更适合绘制复杂的3D图形或高性能的2D图形，而 TextureView 更适合播放视频或显示相机预览之类的应用。

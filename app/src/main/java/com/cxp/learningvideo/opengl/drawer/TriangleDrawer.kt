@@ -128,6 +128,11 @@ class TriangleDrawer: IDrawer {
         GLES20.glDeleteProgram(mProgram)
     }
 
+    /**
+     * 这是一段GLSL顶点着色器代码，它将输入顶点的位置转换为输出屏幕上的像素位置。
+    首先，使用了 attribute 关键字声明了一个顶点属性。顶点属性是一种特殊的变量，用于从顶点缓冲区传递数据到顶点着色器。这里声明的顶点属性名称是 aPosition，类型是 vec4，表示顶点的位置。
+    然后是 main 函数，这是所有GLSL着色器程序必须具有的函数。在这里，使用了 gl_Position 变量来设置输出像素的位置。gl_Position 是GLSL中的内置变量，用于指定当前顶点的位置。这里将它设置为输入的顶点位置，表示将输入的顶点位置转换为输出像素的位置。
+     */
     private fun getVertexShader(): String {
         return "attribute vec4 aPosition;" +
                 "void main() {" +
@@ -135,6 +140,11 @@ class TriangleDrawer: IDrawer {
                 "}"
     }
 
+    /**
+     * vec4 是GLSL中的内置类型，表示一个四元组（4D向量）。这里使用了构造函数来创建一个新的 vec4 变量，并将四个参数分别设置为1.0、0.0、0.0和1.0。
+    第一个参数表示红色分量的值，它的范围是0到1。第二个参数表示绿色分量的值，第三个参数表示蓝色分量的值。最后一个参数表示透明度，它的范围也是0到1。
+    在这里，将红色分量设置为1.0，意味着红色分量的强度是最大的。绿色和蓝色分量都设置为0.0，意味着这个颜色是纯红色，没有绿色或蓝色的成分。最后一个参数设置为1.0，意味着这个颜色是完全不透明的
+     */
     private fun getFragmentShader(): String {
         return "precision mediump float;" +
                 "void main() {" +
