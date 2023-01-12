@@ -28,11 +28,19 @@ class BitmapDrawer(private val mBitmap: Bitmap): IDrawer {
     )
 
     // 纹理坐标
+//    private val mTextureCoors = floatArrayOf(
+//        0f, 1f,
+//        1f, 1f,
+//        0f, 0f,
+//        1f, 0f
+//    )
+
+    // 镜像
     private val mTextureCoors = floatArrayOf(
-        0f, 1f,
         1f, 1f,
-        0f, 0f,
-        1f, 0f
+        0f, 1f,
+        1f, 0f,
+        0f, 0f
     )
 
     private var mTextureId: Int = -1
