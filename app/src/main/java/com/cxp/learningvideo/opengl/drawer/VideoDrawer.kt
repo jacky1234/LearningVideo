@@ -250,6 +250,15 @@ class VideoDrawer : IDrawer {
         GLES20.glDeleteProgram(mProgram)
     }
 
+
+    /**
+     * 这段代码是一个OpenGL顶点着色器的示例：
+     * 它定义了一个名为"aPosition"的属性变量，用于存储顶点的坐标。
+     * 它还定义了一个名为"uMatrix"的uniform变量，用于存储变换矩阵。
+     * 还有一个名为"aCoordinate"的属性变量，用于存储纹理坐标。这个属性变量被传递给片元着色器，用于纹理映射。最后还有一个名为"alpha"的属性变量，用于存储透明度。
+     *
+     * 在main()函数中，顶点坐标通过变换矩阵uMatrix和aPosition进行变换，然后赋值给gl_Position。纹理坐标aCoordinate被传递给vCoordinate，方便片段着色器使用。透明度alpha被传递给inAlpha，方便片段着色器使用。
+     */
     private fun getVertexShader(): String {
         return "attribute vec4 aPosition;" +
                 "precision mediump float;" +
