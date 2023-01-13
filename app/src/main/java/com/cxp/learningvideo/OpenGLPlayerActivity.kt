@@ -2,8 +2,11 @@ package com.cxp.learningvideo
 
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Surface
+import com.chenlittleping.videoeditor.decoder.MMExtractor
 import com.cxp.learningvideo.media.decoder.AudioDecoder
 import com.cxp.learningvideo.media.decoder.VideoDecoder
 import com.cxp.learningvideo.opengl.SimpleRender
@@ -22,8 +25,12 @@ import java.util.concurrent.Executors
  * @Datetime 2019-10-26 21:07
  *
  */
-class OpenGLPlayerActivity: AppCompatActivity() {
-    val path = Environment.getExternalStorageDirectory().absolutePath + "/mvtest.mp4"
+class OpenGLPlayerActivity : AppCompatActivity() {
+    companion object {
+        const val TAG = "OpenGLPlayerActivity"
+    }
+
+    val path = Environment.getExternalStorageDirectory().absolutePath + "/test/mvtest.mp4"
     lateinit var drawer: IDrawer
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +41,13 @@ class OpenGLPlayerActivity: AppCompatActivity() {
 
     private fun initRender() {
         drawer = VideoDrawer()
-        drawer.setVideoSize(1920, 1080)
+        val mmExtractor = MMExtractor(path)
+        val withAndHeight = mmExtractor.getWithAndHeight()
+        if (withAndHeight == null) {
+            Log.e(TAG, "getWithAndHeight null! return")
+            return
+        }
+        drawer.setVideoSize(withAndHeight[0], withAndHeight[1])
         drawer.getSurfaceTexture {
             initPlayer(Surface(it))
         }
