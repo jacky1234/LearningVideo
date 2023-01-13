@@ -2,17 +2,18 @@ package com.cxp.learningvideo
 
 import android.os.Bundle
 import android.os.Environment
-import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Surface
 import com.chenlittleping.videoeditor.decoder.MMExtractor
+import com.cxp.learningvideo.media.IDecoder
 import com.cxp.learningvideo.media.decoder.AudioDecoder
 import com.cxp.learningvideo.media.decoder.VideoDecoder
 import com.cxp.learningvideo.opengl.SimpleRender
 import com.cxp.learningvideo.opengl.drawer.IDrawer
 import com.cxp.learningvideo.opengl.drawer.VideoDrawer
 import kotlinx.android.synthetic.main.activity_opengl_player.*
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 
@@ -32,6 +33,9 @@ class OpenGLPlayerActivity : AppCompatActivity() {
 
     val path = Environment.getExternalStorageDirectory().absolutePath + "/test/mvtest.mp4"
     lateinit var drawer: IDrawer
+    var videoDecoder: IDecoder?  = null
+    var audioDecoder: IDecoder?  = null
+    var executorService: ExecutorService?  = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,15 +62,24 @@ class OpenGLPlayerActivity : AppCompatActivity() {
     }
 
     private fun initPlayer(sf: Surface) {
-        val threadPool = Executors.newFixedThreadPool(10)
+        executorService = Executors.newFixedThreadPool(10)
+        videoDecoder = VideoDecoder(path, null, sf)
+        audioDecoder = AudioDecoder(path)
+        executorService?.execute(videoDecoder)
+        executorService?.execute(audioDecoder)
 
-        val videoDecoder = VideoDecoder(path, null, sf)
-        threadPool.execute(videoDecoder)
+        videoDecoder?.goOn()
+        audioDecoder?.goOn()
+    }
 
-        val audioDecoder = AudioDecoder(path)
-        threadPool.execute(audioDecoder)
+    override fun onDestroy() {
+        super.onDestroy()
 
-        videoDecoder.goOn()
-        audioDecoder.goOn()
+        videoDecoder?.stop()
+        audioDecoder?.stop()
+        try {
+            executorService?.shutdown()
+        } catch (e: Exception) {
+        }
     }
 }
