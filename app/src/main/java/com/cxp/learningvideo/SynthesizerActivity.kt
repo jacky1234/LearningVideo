@@ -32,7 +32,7 @@ import java.util.concurrent.Executors
  */
 class SynthesizerActivity: AppCompatActivity(), MMuxer.IMuxerStateListener {
 
-    private val path = Environment.getExternalStorageDirectory().absolutePath + "/mvtest.mp4"
+    private val path = Environment.getExternalStorageDirectory().absolutePath + "/test/mvtest.mp4"
 
     private val threadPool = Executors.newFixedThreadPool(10)
 

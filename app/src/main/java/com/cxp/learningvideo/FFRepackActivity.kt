@@ -20,7 +20,7 @@ class FFRepackActivity: AppCompatActivity() {
 
     private var ffRepack: Int = 0
 
-    private val srcPath = Environment.getExternalStorageDirectory().absolutePath + "/mvtest.mp4"
+    private val srcPath = Environment.getExternalStorageDirectory().absolutePath + "/test/mvtest.mp4"
     private val destPath = Environment.getExternalStorageDirectory().absolutePath + "/mvtest_repack.mp4"
 
     override fun onCreate(savedInstanceState: Bundle?) {

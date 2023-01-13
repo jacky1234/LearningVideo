@@ -23,7 +23,7 @@ import java.util.concurrent.Executors
  *
  */
 class SoulPlayerActivity: AppCompatActivity() {
-    val path = Environment.getExternalStorageDirectory().absolutePath + "/mvtest.mp4"
+    val path = Environment.getExternalStorageDirectory().absolutePath + "/test/mvtest.mp4"
     lateinit var drawer: IDrawer
 
     override fun onCreate(savedInstanceState: Bundle?) {

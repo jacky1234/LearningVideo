@@ -20,7 +20,7 @@ import java.io.File
  */
 class FFmpegActivity: AppCompatActivity() {
 
-    val path = Environment.getExternalStorageDirectory().absolutePath + "/mvtest.mp4"
+    val path = Environment.getExternalStorageDirectory().absolutePath + "/test/mvtest.mp4"
 
     private var player: Int? = null
 

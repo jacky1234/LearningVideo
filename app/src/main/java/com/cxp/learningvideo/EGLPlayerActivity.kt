@@ -26,8 +26,8 @@ import java.util.concurrent.Executors
  *
  */
 class EGLPlayerActivity: AppCompatActivity() {
-    private val path = Environment.getExternalStorageDirectory().absolutePath + "/mvtest_2.mp4"
-    private val path2 = Environment.getExternalStorageDirectory().absolutePath + "/mvtest.mp4"
+    private val path = Environment.getExternalStorageDirectory().absolutePath + "/test/mvtest_2.mp4"
+    private val path2 = Environment.getExternalStorageDirectory().absolutePath + "/test/mvtest.mp4"
 
     private val threadPool = Executors.newFixedThreadPool(10)
 
