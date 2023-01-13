@@ -37,7 +37,9 @@ class MMExtractor(path: String?) {
 
     init {
         mExtractor = MediaExtractor()
-        mExtractor?.setDataSource(path)
+        if (path != null) {
+            mExtractor?.setDataSource(path)
+        }
     }
 
     /**
@@ -47,7 +49,7 @@ class MMExtractor(path: String?) {
         for (i in 0 until mExtractor!!.trackCount) {
             val mediaFormat = mExtractor!!.getTrackFormat(i)
             val mime = mediaFormat.getString(MediaFormat.KEY_MIME)
-            if (mime.startsWith("video/")) {
+            if (mime != null && mime.startsWith("video/")) {
                 mVideoTrack = i
                 break
             }
@@ -64,7 +66,7 @@ class MMExtractor(path: String?) {
         for (i in 0 until mExtractor!!.trackCount) {
             val mediaFormat = mExtractor!!.getTrackFormat(i)
             val mime = mediaFormat.getString(MediaFormat.KEY_MIME)
-            if (mime.startsWith("audio/")) {
+            if (mime != null && mime.startsWith("audio/")) {
                 mAudioTrack = i
                 break
             }
@@ -140,5 +142,21 @@ class MMExtractor(path: String?) {
 
     fun getSampleFlag(): Int {
         return mCurSampleFlag
+    }
+
+    fun getWithAndHeight(): IntArray? {
+        var videoWidth = 0
+        var videoHeight = 0
+        val extractor = mExtractor ?: return null
+        for (i in 0 until extractor.trackCount) {
+            val format = extractor.getTrackFormat(i)
+            val mime = format.getString(MediaFormat.KEY_MIME)
+            if (mime != null  && mime.startsWith("video/")) {
+                videoWidth = format.getInteger(MediaFormat.KEY_WIDTH)
+                videoHeight = format.getInteger(MediaFormat.KEY_HEIGHT)
+                break
+            }
+        }
+        return intArrayOf(videoWidth, videoHeight)
     }
 }
