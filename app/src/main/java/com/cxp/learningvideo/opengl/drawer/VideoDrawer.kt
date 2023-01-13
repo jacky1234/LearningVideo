@@ -175,6 +175,7 @@ class VideoDrawer : IDrawer {
 
     override fun draw() {
         if (mTextureId != -1) {
+            //【新增1: 初始化矩阵方法】
             initDefMatrix()
             //【步骤2: 创建、编译并启动OpenGL着色器】
             createGLPrg()
