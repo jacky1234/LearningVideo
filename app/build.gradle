@@ -23,8 +23,21 @@ android {
             abiFilters  "armeabi-v7a"
         }
     }
-    buildTypes {
+    signingConfigs {
         release {
+            storeFile file("../assets/config/keystore/jackTg.jks")
+            storePassword "123123asd"
+            keyAlias "jacktg"
+            keyPassword "123123asd"
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+        }
+        release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
