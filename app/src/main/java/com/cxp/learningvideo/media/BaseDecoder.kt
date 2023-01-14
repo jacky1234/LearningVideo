@@ -171,7 +171,7 @@ abstract class BaseDecoder(private val mFilePath: String): IDecoder {
 
     private fun init(): Boolean {
         if (mFilePath.isEmpty() || !File(mFilePath).exists()) {
-            Log.w(TAG, "文件路径为空")
+            Log.e(TAG, "文件路径为空")
             mStateListener?.decoderError(this, "文件路径为空")
             return false
         }
