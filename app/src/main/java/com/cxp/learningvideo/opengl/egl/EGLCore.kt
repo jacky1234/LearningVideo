@@ -123,15 +123,10 @@ class EGLCore {
 
         val surfaceAttr = intArrayOf(EGL14.EGL_NONE)
 
-        val eglSurface = EGL14.eglCreateWindowSurface(
-                                        mEGLDisplay, mEGLConfig, surface,
-                                        surfaceAttr, 0)
-
-        if (eglSurface == null) {
-            throw RuntimeException("Surface was null")
-        }
-
-        return eglSurface
+        return EGL14.eglCreateWindowSurface(
+            mEGLDisplay, mEGLConfig, surface,
+            surfaceAttr, 0
+        ) ?: throw RuntimeException("Surface was null")
     }
 
     /**

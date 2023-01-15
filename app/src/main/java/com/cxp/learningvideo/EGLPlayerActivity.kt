@@ -3,6 +3,7 @@ package com.cxp.learningvideo
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
+import android.os.Looper
 import android.support.v7.app.AppCompatActivity
 import android.view.Surface
 import com.cxp.learningvideo.media.BaseDecoder
@@ -12,6 +13,7 @@ import com.cxp.learningvideo.media.decoder.AudioDecoder
 import com.cxp.learningvideo.media.decoder.VideoDecoder
 import com.cxp.learningvideo.opengl.drawer.VideoDrawer
 import com.cxp.learningvideo.opengl.egl.CustomerGLRenderer
+import com.cxp.learningvideo.utils.MediaUtil
 import kotlinx.android.synthetic.main.activity_egl_player.*
 import java.util.concurrent.Executors
 
@@ -33,6 +35,8 @@ class EGLPlayerActivity: AppCompatActivity() {
 
     private var mRenderer = CustomerGLRenderer()
 
+    private var frameIndex = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_egl_player)
@@ -43,7 +47,8 @@ class EGLPlayerActivity: AppCompatActivity() {
 
     private fun initFirstVideo() {
         val drawer = VideoDrawer()
-        drawer.setVideoSize(1920, 1080)
+        val widthAndHeight = MediaUtil.getWidthAndHeight(path)
+        drawer.setVideoSize(widthAndHeight[0], widthAndHeight[1])
         drawer.getSurfaceTexture {
             initPlayer(path, Surface(it), true)
         }
@@ -53,24 +58,30 @@ class EGLPlayerActivity: AppCompatActivity() {
     private fun initSecondVideo() {
         val drawer = VideoDrawer()
         drawer.setAlpha(0.5f)
-        drawer.setVideoSize(1920, 1080)
+        val widthAndHeight = MediaUtil.getWidthAndHeight(path2)
+        drawer.setVideoSize(widthAndHeight[0], widthAndHeight[1])
         drawer.getSurfaceTexture {
-            initPlayer(path2, Surface(it), false)
+            initPlayer(path2, Surface(it), false, Runnable {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    drawer.scale(0.5f, 0.5f)
+                }, 1000)
+            })
         }
         mRenderer.addDrawer(drawer)
-
-        Handler().postDelayed({
-            drawer.scale(0.5f, 0.5f)
-        }, 1000)
     }
 
-    private fun initPlayer(path: String, sf: Surface, withSound: Boolean) {
+    private fun initPlayer(path: String, sf: Surface, withSound: Boolean, firstFrameRunnable: Runnable? = null) {
         val videoDecoder = VideoDecoder(path, null, sf)
         threadPool.execute(videoDecoder)
         videoDecoder.goOn()
         videoDecoder.setStateListener(object : DefDecoderStateListener {
             override fun decodeOneFrame(decodeJob: BaseDecoder?, frame: Frame) {
                 mRenderer.notifySwap(frame.bufferInfo.presentationTimeUs)
+
+                if (frameIndex == 0) {
+                    firstFrameRunnable?.run()
+                }
+                frameIndex++
             }
         })
 

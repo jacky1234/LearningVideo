@@ -108,6 +108,10 @@ class CustomerGLRenderer : SurfaceHolder.Callback {
 
         private var mRenderMode = RenderMode.RENDER_WHEN_DIRTY
 
+        init {
+            this.name = "[Render-CustomerGLRenderer]"
+        }
+
         private fun holdOn() {
             synchronized(mWaitLock) {
                 mWaitLock.wait()
