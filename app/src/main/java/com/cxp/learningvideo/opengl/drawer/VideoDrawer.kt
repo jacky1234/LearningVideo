@@ -259,6 +259,12 @@ class VideoDrawer : IDrawer {
      * 还有一个名为"aCoordinate"的属性变量，用于存储纹理坐标。这个属性变量被传递给片元着色器，用于纹理映射。最后还有一个名为"alpha"的属性变量，用于存储透明度。
      *
      * 在main()函数中，顶点坐标通过变换矩阵uMatrix和aPosition进行变换，然后赋值给gl_Position。纹理坐标aCoordinate被传递给vCoordinate，方便片段着色器使用。透明度alpha被传递给inAlpha，方便片段着色器使用。
+     *
+     * 输入：
+     *      attribute变量：一般用来传入一些顶点的数据，如：顶点坐标，法线，纹理坐标，顶点颜色等。
+     * 输出：
+     *      gl_Position: build-in变量,即glsl的内建变量
+     *      varying变量: 用于顶点着色器向片元着色器传递数据。需要注意的是, 这种变量必须在顶点着色器和片元着色器中，声明必须一致。比如上面的inAlpha。
      */
     private fun getVertexShader(): String {
         return "attribute vec4 aPosition;" +
@@ -275,6 +281,9 @@ class VideoDrawer : IDrawer {
                 "}"
     }
 
+    /**
+     * build-in变量：即glsl的内建变量，如：gl_FragColor。
+     */
     private fun getFragmentShader(): String {
         //一定要加换行"\n"，否则会和下一行的precision混在一起，导致编译出错
         return "#extension GL_OES_EGL_image_external : require\n" +

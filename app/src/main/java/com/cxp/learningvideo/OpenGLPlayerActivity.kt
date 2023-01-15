@@ -12,6 +12,7 @@ import com.cxp.learningvideo.media.decoder.VideoDecoder
 import com.cxp.learningvideo.opengl.SimpleRender
 import com.cxp.learningvideo.opengl.drawer.IDrawer
 import com.cxp.learningvideo.opengl.drawer.VideoDrawer
+import com.cxp.learningvideo.utils.MediaUtil
 import kotlinx.android.synthetic.main.activity_opengl_player.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -45,13 +46,8 @@ class OpenGLPlayerActivity : AppCompatActivity() {
 
     private fun initRender() {
         drawer = VideoDrawer()
-        val mmExtractor = MMExtractor(path)
-        val withAndHeight = mmExtractor.getWithAndHeight()
-        if (withAndHeight == null) {
-            Log.e(TAG, "getWithAndHeight null! return")
-            return
-        }
-        drawer.setVideoSize(withAndHeight[0], withAndHeight[1])
+        val widthAndHeight = MediaUtil.getWidthAndHeight(path)
+        drawer.setVideoSize(widthAndHeight[0], widthAndHeight[1])
         drawer.getSurfaceTexture {
             initPlayer(Surface(it))
         }

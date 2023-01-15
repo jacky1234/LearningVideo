@@ -24,8 +24,9 @@ const val FLAG_RECORDABLE = 0x01
 const val EGL_RECORDABLE_ANDROID = 0x3142
 
 class EGLCore {
-
-    private val TAG = "EGLCore"
+    companion object {
+        private const val TAG = "EGLCore"
+    }
 
     // EGL相关变量
     private var mEGLDisplay: EGLDisplay = EGL14.EGL_NO_DISPLAY

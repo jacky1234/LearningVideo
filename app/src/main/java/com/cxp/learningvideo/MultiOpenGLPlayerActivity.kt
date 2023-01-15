@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Surface
+import com.chenlittleping.videoeditor.decoder.MMExtractor
 import com.cxp.learningvideo.media.decoder.AudioDecoder
 import com.cxp.learningvideo.media.decoder.VideoDecoder
 import com.cxp.learningvideo.opengl.SimpleRender
 import com.cxp.learningvideo.opengl.drawer.VideoDrawer
+import com.cxp.learningvideo.utils.MediaUtil
 import kotlinx.android.synthetic.main.activity_opengl_player.*
 import java.util.concurrent.Executors
 
@@ -40,7 +43,10 @@ class MultiOpenGLPlayerActivity: AppCompatActivity() {
 
     private fun initFirstVideo() {
         val drawer = VideoDrawer()
-        drawer.setVideoSize(1920, 1080)
+
+        val widthAndHeight = MediaUtil.getWidthAndHeight(path2)
+        drawer.setVideoSize(widthAndHeight[0], widthAndHeight[1])
+
         drawer.getSurfaceTexture {
             initPlayer(path, Surface(it), true)
         }
@@ -50,7 +56,10 @@ class MultiOpenGLPlayerActivity: AppCompatActivity() {
     private fun initSecondVideo() {
         val drawer = VideoDrawer()
         drawer.setAlpha(0.5f)
-        drawer.setVideoSize(1920, 1080)
+
+        val widthAndHeight = MediaUtil.getWidthAndHeight(path2)
+        drawer.setVideoSize(widthAndHeight[0], widthAndHeight[1])
+
         drawer.getSurfaceTexture {
             initPlayer(path2, Surface(it), false)
         }
